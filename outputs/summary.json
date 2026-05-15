@@ -1,0 +1,19 @@
+{
+  "results": [
+    {
+      "loss_name": "ce",
+      "best_miou": 0.742565393447876,
+      "best_checkpoint": "outputs\\ce\\best_model.pt"
+    },
+    {
+      "loss_name": "dice",
+      "best_miou": 0.7476022839546204,
+      "best_checkpoint": "outputs\\dice\\best_model.pt"
+    },
+    {
+      "loss_name": "combo",
+      "best_miou": 0.742367684841156,
+      "best_checkpoint": "outputs\\combo\\best_model.pt"
+    }
+  ]
+}

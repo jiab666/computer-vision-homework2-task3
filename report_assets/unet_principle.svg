@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#2f6f9f"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#2d8a5f"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#c36b2c"/>
+    </marker>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#1a2b33" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .title { font: 700 38px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #17212b; }
+      .subtitle { font: 400 20px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #53616f; }
+      .block-title { font: 700 22px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #17212b; }
+      .block-text { font: 400 16px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #344454; }
+      .small { font: 400 15px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #53616f; }
+      .label { font: 700 16px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #283845; }
+      .axis { stroke: #2f6f9f; stroke-width: 3; fill: none; marker-end: url(#arrow-blue); }
+      .skip { stroke: #2d8a5f; stroke-width: 3.5; fill: none; stroke-dasharray: 10 9; marker-end: url(#arrow-green); }
+      .up { stroke: #c36b2c; stroke-width: 3; fill: none; marker-end: url(#arrow-orange); }
+      .thin { stroke: #7b8794; stroke-width: 2; fill: none; marker-end: url(#arrow-blue); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#fbfaf6"/>
+  <rect x="34" y="32" width="1532" height="914" rx="18" fill="#ffffff" stroke="#e3e0d8"/>
+
+  <text x="800" y="86" text-anchor="middle" class="title">U-Net 语义分割网络原理图</text>
+  <text x="800" y="120" text-anchor="middle" class="subtitle">编码器提取语义，解码器恢复分辨率，Skip Connection 补回边界细节</text>
+
+  <text x="315" y="171" text-anchor="middle" class="label">下采样编码器 Encoder</text>
+  <text x="1190" y="171" text-anchor="middle" class="label">上采样解码器 Decoder</text>
+
+  <!-- Input -->
+  <g filter="url(#soft-shadow)">
+    <rect x="58" y="206" width="130" height="96" rx="8" fill="#f2f4f5" stroke="#a9b3bc" stroke-width="2"/>
+    <text x="123" y="243" text-anchor="middle" class="block-title">输入图像</text>
+    <text x="123" y="272" text-anchor="middle" class="block-text">RGB, 3×H×W</text>
+  </g>
+
+  <!-- Encoder blocks -->
+  <g filter="url(#soft-shadow)">
+    <rect x="225" y="206" width="220" height="96" rx="8" fill="#dceeff" stroke="#3178c6" stroke-width="2"/>
+    <text x="335" y="238" text-anchor="middle" class="block-title">DoubleConv 1</text>
+    <text x="335" y="266" text-anchor="middle" class="block-text">3×3 Conv + BN + ReLU</text>
+    <text x="335" y="288" text-anchor="middle" class="small">输出: 64×H×W</text>
+  </g>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="225" y="366" width="220" height="96" rx="8" fill="#dceeff" stroke="#3178c6" stroke-width="2"/>
+    <text x="335" y="398" text-anchor="middle" class="block-title">DownBlock 2</text>
+    <text x="335" y="426" text-anchor="middle" class="block-text">MaxPool + DoubleConv</text>
+    <text x="335" y="448" text-anchor="middle" class="small">输出: 128×H/2×W/2</text>
+  </g>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="225" y="526" width="220" height="96" rx="8" fill="#dceeff" stroke="#3178c6" stroke-width="2"/>
+    <text x="335" y="558" text-anchor="middle" class="block-title">DownBlock 3</text>
+    <text x="335" y="586" text-anchor="middle" class="block-text">MaxPool + DoubleConv</text>
+    <text x="335" y="608" text-anchor="middle" class="small">输出: 256×H/4×W/4</text>
+  </g>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="225" y="686" width="220" height="96" rx="8" fill="#dceeff" stroke="#3178c6" stroke-width="2"/>
+    <text x="335" y="718" text-anchor="middle" class="block-title">DownBlock 4</text>
+    <text x="335" y="746" text-anchor="middle" class="block-text">MaxPool + DoubleConv</text>
+    <text x="335" y="768" text-anchor="middle" class="small">输出: 512×H/8×W/8</text>
+  </g>
+
+  <!-- Bottleneck -->
+  <g filter="url(#soft-shadow)">
+    <rect x="690" y="796" width="250" height="104" rx="8" fill="#ffe5ca" stroke="#c36b2c" stroke-width="2"/>
+    <text x="815" y="831" text-anchor="middle" class="block-title">瓶颈层 Bottleneck</text>
+    <text x="815" y="861" text-anchor="middle" class="block-text">最小分辨率，最强语义信息</text>
+    <text x="815" y="884" text-anchor="middle" class="small">输出: 1024×H/16×W/16</text>
+  </g>
+
+  <!-- Decoder blocks -->
+  <g filter="url(#soft-shadow)">
+    <rect x="1110" y="686" width="250" height="96" rx="8" fill="#dcf6e4" stroke="#2d8a5f" stroke-width="2"/>
+    <text x="1235" y="718" text-anchor="middle" class="block-title">UpBlock 1</text>
+    <text x="1235" y="746" text-anchor="middle" class="block-text">转置卷积上采样 + 拼接</text>
+    <text x="1235" y="768" text-anchor="middle" class="small">输出: 512×H/8×W/8</text>
+  </g>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="1110" y="526" width="250" height="96" rx="8" fill="#dcf6e4" stroke="#2d8a5f" stroke-width="2"/>
+    <text x="1235" y="558" text-anchor="middle" class="block-title">UpBlock 2</text>
+    <text x="1235" y="586" text-anchor="middle" class="block-text">转置卷积上采样 + 拼接</text>
+    <text x="1235" y="608" text-anchor="middle" class="small">输出: 256×H/4×W/4</text>
+  </g>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="1110" y="366" width="250" height="96" rx="8" fill="#dcf6e4" stroke="#2d8a5f" stroke-width="2"/>
+    <text x="1235" y="398" text-anchor="middle" class="block-title">UpBlock 3</text>
+    <text x="1235" y="426" text-anchor="middle" class="block-text">转置卷积上采样 + 拼接</text>
+    <text x="1235" y="448" text-anchor="middle" class="small">输出: 128×H/2×W/2</text>
+  </g>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="1110" y="206" width="250" height="96" rx="8" fill="#dcf6e4" stroke="#2d8a5f" stroke-width="2"/>
+    <text x="1235" y="238" text-anchor="middle" class="block-title">UpBlock 4</text>
+    <text x="1235" y="266" text-anchor="middle" class="block-text">转置卷积上采样 + 拼接</text>
+    <text x="1235" y="288" text-anchor="middle" class="small">输出: 64×H×W</text>
+  </g>
+
+  <!-- Output -->
+  <g filter="url(#soft-shadow)">
+    <rect x="1410" y="206" width="130" height="96" rx="8" fill="#fff2b7" stroke="#b48a00" stroke-width="2"/>
+    <text x="1475" y="241" text-anchor="middle" class="block-title">1×1 Conv</text>
+    <text x="1475" y="269" text-anchor="middle" class="block-text">3 类 logits</text>
+    <text x="1475" y="291" text-anchor="middle" class="small">B×3×H×W</text>
+  </g>
+
+  <!-- Main flow arrows -->
+  <path class="thin" d="M188 254 H225"/>
+  <path class="axis" d="M335 302 V366"/>
+  <text x="360" y="339" class="small">MaxPool 2×</text>
+  <path class="axis" d="M335 462 V526"/>
+  <text x="360" y="499" class="small">MaxPool 2×</text>
+  <path class="axis" d="M335 622 V686"/>
+  <text x="360" y="659" class="small">MaxPool 2×</text>
+  <path class="axis" d="M445 734 C540 742, 575 822, 690 848"/>
+  <text x="510" y="790" class="small">MaxPool 2×</text>
+
+  <path class="up" d="M940 848 C1018 832, 1033 755, 1110 734"/>
+  <text x="1000" y="809" class="small">UpConv 2×</text>
+  <path class="up" d="M1235 686 V622"/>
+  <text x="1255" y="660" class="small">UpConv 2×</text>
+  <path class="up" d="M1235 526 V462"/>
+  <text x="1255" y="500" class="small">UpConv 2×</text>
+  <path class="up" d="M1235 366 V302"/>
+  <text x="1255" y="340" class="small">UpConv 2×</text>
+  <path class="thin" d="M1360 254 H1410"/>
+
+  <!-- Skip connections -->
+  <path class="skip" d="M445 254 H1110"/>
+  <path class="skip" d="M445 414 H1110"/>
+  <path class="skip" d="M445 574 H1110"/>
+  <path class="skip" d="M445 734 H1110"/>
+  <text x="778" y="238" text-anchor="middle" class="label" fill="#2d8a5f">Skip Connection: 编码器特征与解码器特征按通道拼接</text>
+
+  <!-- Training supervision note -->
+  <g filter="url(#soft-shadow)">
+    <rect x="1010" y="832" width="440" height="68" rx="8" fill="#fff7ee" stroke="#d4a16c" stroke-width="1.8"/>
+    <text x="1032" y="859" class="block-text">训练时：输出 logits 与真实 mask 逐像素计算损失</text>
+    <text x="1032" y="884" class="small">可比较 Cross-Entropy、Dice Loss、CE + Dice，并用 mIoU 评估</text>
+  </g>
+  <path class="up" d="M1475 302 C1490 520, 1440 720, 1360 832"/>
+
+  <!-- Legend -->
+  <g>
+    <rect x="78" y="848" width="22" height="16" rx="3" fill="#dceeff" stroke="#3178c6"/>
+    <text x="110" y="862" class="small">编码器：分辨率下降，通道数增加，语义增强</text>
+    <rect x="78" y="880" width="22" height="16" rx="3" fill="#dcf6e4" stroke="#2d8a5f"/>
+    <text x="110" y="894" class="small">解码器：分辨率恢复，结合浅层细节定位边界</text>
+    <line x1="78" y1="918" x2="100" y2="918" stroke="#2d8a5f" stroke-width="3" stroke-dasharray="7 6"/>
+    <text x="110" y="923" class="small">虚线：Skip Connection，避免细节在下采样中丢失</text>
+  </g>
+</svg>

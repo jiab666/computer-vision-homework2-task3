@@ -1,0 +1,29 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Downloaded datasets and archives
+data/
+*.tar.gz
+
+# Large model weights and checkpoints
+model_weights/
+*.pt
+*.pth
+*.ckpt
+
+# Experiment tracker local run caches
+outputs/**/run-*/
+*.swanlab
+wandb/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
