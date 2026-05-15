@@ -172,26 +172,6 @@ outputs/ce/
 
 `outputs/dice/` 和 `outputs/combo/` 的结构相同。
 
-## 模型权重上传说明
-
-如果作业只要求上传最终模型权重，建议上传三组实验各自的最佳模型：
-
-- `outputs/ce/best_model.pt`
-- `outputs/dice/best_model.pt`
-- `outputs/combo/best_model.pt`
-
-这三个文件对应报告中三种损失函数配置的最佳验证集 mIoU 结果，是最应该上传的模型权重。
-
-如果老师要求可以继续训练或复现实验中断点，可以额外上传：
-
-- `outputs/ce/last_checkpoint.pt`
-- `outputs/dice/last_checkpoint.pt`
-- `outputs/combo/last_checkpoint.pt`
-
-其中 `last_checkpoint.pt` 包含最后一个 epoch 的模型参数、优化器状态、训练历史等信息，适合恢复训练；`best_model.pt` 更适合作为最终提交和推理评估使用。
-
-如果网盘空间有限，优先上传三个 `best_model.pt` 即可。
-
 ## 报告相关文件
 
 - `实验报告.md`：本次任务 3 的实验报告
