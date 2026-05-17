@@ -39,33 +39,29 @@
 └── 实验报告.md                # 实验报告
 ```
 
-## 环境配置
+## 3. 环境配置
 
 推荐使用 Python `3.10+`。
 
-安装依赖：
+### 3.1 先安装 PyTorch 相关依赖
+
+`requirements.txt` 不直接包含 `torch`、`torchvision` 和 `torchaudio`，因为这几个包需要根据本机 CUDA 版本单独安装。
+
+如果你当前环境与本实验一致，使用的是 CUDA 11.8，推荐先执行：
+
+```bash
+pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu118
+```
+
+如果你是 CPU 环境，或者 CUDA 版本不同，需要改成对应版本的 PyTorch 官方安装命令。
+
+### 3.2 再安装其余依赖
 
 ```bash
 pip install -r requirements.txt
 ```
 
-或者手动安装主要依赖：
-
-```bash
-pip install torch torchvision tqdm matplotlib
-```
-
-如果需要使用 WandB 或 SwanLab 记录实验过程，需要额外安装对应包：
-
-```bash
-pip install wandb
-```
-
-或：
-
-```bash
-pip install swanlab
-```
+`requirements.txt` 中包含 `tqdm`、`matplotlib`、`numpy`、`Pillow`、`wandb` 和 `swanlab` 等其余依赖。
 
 ## 数据集说明
 
@@ -179,4 +175,3 @@ outputs/ce/
 - `report_assets/*_train_loss.png`：SwanLab 训练集 loss 截图
 - `report_assets/*_val_loss.png`：SwanLab 验证集 loss 截图
 - `report_assets/*_val_accuracy.png`：SwanLab 验证集 Accuracy 截图
-
